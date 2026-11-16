@@ -33,41 +33,41 @@ export default function SearchModal({ isOpen, onClose }) {
     : [];
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex flex-col p-4 sm:p-6 md:p-12 animate-fade-in">
+    <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex flex-col p-2 sm:p-6 md:p-12 animate-fade-in">
       <div
-        className="max-w-4xl w-full mx-auto bg-[#FEFAE0] border border-[#DDA15E]/50 shadow-2xl flex flex-col max-h-[85vh] overflow-hidden"
+        className="max-w-4xl w-full mx-auto bg-[#FEFAE0] border border-[#DDA15E]/50 shadow-2xl flex flex-col max-h-[92vh] sm:max-h-[85vh] overflow-hidden my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Box */}
-        <div className="p-4 sm:p-6 border-b border-[#DDA15E]/30 flex items-center gap-3">
-          <Search className="w-6 h-6 text-[#606C38] shrink-0" />
+        <div className="p-3 sm:p-6 border-b border-[#DDA15E]/30 flex items-center gap-2 sm:gap-3">
+          <Search className="w-5 h-5 sm:w-6 sm:h-6 text-[#606C38] shrink-0" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by name, khussa, velvet, dabka, wedding shawls..."
-            className="flex-1 bg-transparent text-lg sm:text-xl font-heading text-[#283618] placeholder-[#283618]/40 focus:outline-none"
+            placeholder="Search by name, khussa, velvet, dabka..."
+            className="flex-1 bg-transparent text-base sm:text-xl font-heading text-[#283618] placeholder-[#283618]/40 focus:outline-none min-w-0"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="text-xs uppercase text-[#BC6C25] hover:underline"
+              className="text-xs uppercase text-[#BC6C25] hover:underline shrink-0"
             >
               Clear
             </button>
           )}
           <button
             onClick={onClose}
-            className="p-1.5 text-[#283618]/70 hover:text-[#283618] transition-colors ml-2"
+            className="p-1.5 text-[#283618]/70 hover:text-[#283618] transition-colors ml-1 sm:ml-2 shrink-0 cursor-pointer"
             aria-label="Close search"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
 
         {/* Categories Quick Filter */}
-        <div className="px-6 py-3 bg-[#606C38]/10 border-b border-[#DDA15E]/20 flex items-center gap-2 overflow-x-auto text-xs">
+        <div className="px-3 sm:px-6 py-2.5 sm:py-3 bg-[#606C38]/10 border-b border-[#DDA15E]/20 flex items-center gap-2 overflow-x-auto text-xs">
           <span className="text-[11px] uppercase tracking-wider font-semibold text-[#283618]/70 shrink-0">
             Popular:
           </span>
@@ -84,7 +84,7 @@ export default function SearchModal({ isOpen, onClose }) {
         </div>
 
         {/* Results Area */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-6">
           {query.trim() === '' ? (
             <div className="py-8 text-center text-[#283618]/70">
               <Sparkles className="w-8 h-8 text-[#DDA15E] mx-auto mb-2" />

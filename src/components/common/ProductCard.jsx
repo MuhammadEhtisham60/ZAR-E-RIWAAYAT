@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Heart, Eye, ShoppingBag, Sparkles } from 'lucide-react';
+import { Heart, Eye, ShoppingBag, Sparkles, Check } from 'lucide-react';
 import { toggleWishlist } from '../../store/wishlistSlice';
 import { addToCart } from '../../store/cartSlice';
 import { formatCurrency } from '../../store/currencySlice';
@@ -60,7 +60,7 @@ export default function ProductCard({ product, onQuickView }) {
 
         {/* Badge */}
         {product.badge && (
-          <div className="absolute top-3 left-3 bg-[#283618]/90 text-[#FEFAE0] text-[10px] uppercase tracking-widest px-2.5 py-1 font-semibold border border-[#DDA15E]/40 backdrop-blur-xs">
+          <div className="absolute top-2.5 sm:top-3 left-2.5 sm:left-3 bg-[#283618]/90 text-[#FEFAE0] text-[9px] sm:text-[10px] uppercase tracking-widest px-2 sm:px-2.5 py-0.5 sm:py-1 font-semibold border border-[#DDA15E]/40 backdrop-blur-xs">
             {product.badge}
           </div>
         )}
@@ -68,7 +68,7 @@ export default function ProductCard({ product, onQuickView }) {
         {/* Wishlist Button */}
         <button
           onClick={handleToggleWishlist}
-          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-[#FEFAE0]/90 backdrop-blur-xs flex items-center justify-center text-[#283618] hover:text-[#BC6C25] hover:bg-[#FEFAE0] transition-colors shadow-sm"
+          className="absolute top-2.5 sm:top-3 right-2.5 sm:right-3 w-8 h-8 rounded-full bg-[#FEFAE0]/90 backdrop-blur-xs flex items-center justify-center text-[#283618] hover:text-[#BC6C25] hover:bg-[#FEFAE0] transition-colors shadow-sm focus:outline-none"
           title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
           aria-label="Toggle Wishlist"
         >
@@ -77,9 +77,9 @@ export default function ProductCard({ product, onQuickView }) {
           />
         </button>
 
-        {/* Quick Actions Overlay (Desktop hover) */}
+        {/* Quick Actions Overlay (Desktop hover - preserved for laptops) */}
         <div
-          className={`absolute inset-x-3 bottom-3 flex items-center gap-2 transition-all duration-300 ${
+          className={`hidden lg:flex absolute inset-x-3 bottom-3 items-center gap-2 transition-all duration-300 ${
             isHovered
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-3 pointer-events-none'
@@ -112,20 +112,20 @@ export default function ProductCard({ product, onQuickView }) {
       </div>
 
       {/* Product Information */}
-      <div className="pt-3 pb-2 flex-1 flex flex-col justify-between">
+      <div className="pt-2.5 sm:pt-3 pb-2 flex-1 flex flex-col justify-between">
         <div>
-          <div className="flex items-center justify-between text-[11px] text-[#606C38] uppercase tracking-widest font-medium mb-1">
-            <span>{product.subcategory || product.category}</span>
+          <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-[#606C38] uppercase tracking-widest font-medium mb-1">
+            <span className="truncate max-w-[150px]">{product.subcategory || product.category}</span>
             {product.isCustomizable && (
-              <span className="inline-flex items-center gap-1 text-[#BC6C25]">
+              <span className="inline-flex items-center gap-1 text-[#BC6C25] shrink-0">
                 <Sparkles className="w-2.5 h-2.5" />
-                <span>Customizable</span>
+                <span>Custom</span>
               </span>
             )}
           </div>
 
           <Link to={`/product/${product.id}`} className="block group-hover:text-[#606C38]">
-            <h3 className="font-heading text-lg font-medium text-[#283618] tracking-wide leading-snug line-clamp-1 transition-colors">
+            <h3 className="font-heading text-base sm:text-lg font-medium text-[#283618] tracking-wide leading-snug line-clamp-1 transition-colors">
               {product.title}
             </h3>
           </Link>
@@ -135,17 +135,38 @@ export default function ProductCard({ product, onQuickView }) {
           </p>
         </div>
 
-        <div className="mt-2.5 pt-2 border-t border-[#DDA15E]/15 flex items-center justify-between">
-          <span className="font-medium text-sm text-[#283618] font-mono tracking-tight">
+        <div className="mt-2 sm:mt-2.5 pt-2 border-t border-[#DDA15E]/15 flex items-center justify-between">
+          <span className="font-medium text-xs sm:text-sm text-[#283618] font-mono tracking-tight">
             {formatCurrency(product.pricePKR, regionData)}
           </span>
 
-          <Link
-            to={`/product/${product.id}`}
-            className="text-[11px] uppercase tracking-wider text-[#BC6C25] font-semibold hover:text-[#606C38] transition-colors"
-          >
-            Explore →
-          </Link>
+          <div className="flex items-center gap-2">
+            {/* Mobile & Tablet Quick Add Button */}
+            <button
+              onClick={handleAddToCart}
+              className="lg:hidden inline-flex items-center gap-1 bg-[#606C38] active:bg-[#283618] text-[#FEFAE0] text-[10px] font-bold uppercase tracking-wider py-1 px-2.5 rounded-sm shadow-xs transition-colors"
+              aria-label="Add to Royal Bag"
+            >
+              {addedNotice ? (
+                <>
+                  <Check className="w-3 h-3 text-[#DDA15E]" />
+                  <span>Added</span>
+                </>
+              ) : (
+                <>
+                  <ShoppingBag className="w-3 h-3 text-[#DDA15E]" />
+                  <span>Add</span>
+                </>
+              )}
+            </button>
+
+            <Link
+              to={`/product/${product.id}`}
+              className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#BC6C25] font-semibold hover:text-[#606C38] transition-colors"
+            >
+              Explore →
+            </Link>
+          </div>
         </div>
       </div>
     </div>

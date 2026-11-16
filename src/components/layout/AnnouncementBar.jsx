@@ -22,26 +22,26 @@ export default function AnnouncementBar({ onOpenCurrencyModal }) {
   }, []);
 
   return (
-    <div className="bg-[#283618] text-[#FEFAE0] text-xs py-2 px-4 border-b border-[#606C38]/40 transition-colors">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <div className="bg-[#283618] text-[#FEFAE0] text-[11px] sm:text-xs py-1.5 sm:py-2 px-2.5 sm:px-4 border-b border-[#606C38]/40 transition-colors">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
         {/* Left: Royal Trust indicator */}
-        <div className="hidden lg:flex items-center space-x-2 text-[#DDA15E]">
+        <div className="hidden lg:flex items-center space-x-2 text-[#DDA15E] shrink-0">
           <Sparkles className="w-3.5 h-3.5" />
           <span className="tracking-widest uppercase text-[10px] font-medium">Bespoke Royal Atelier</span>
         </div>
 
         {/* Center: Rotating announcements */}
-        <div className="flex-1 text-center truncate px-2 font-medium tracking-wide">
-          <span className="transition-opacity duration-500 inline-block">
+        <div className="flex-1 text-center truncate px-1 font-medium tracking-wide min-w-0">
+          <span className="transition-opacity duration-500 inline-block text-[10px] sm:text-xs truncate max-w-full">
             {ANNOUNCEMENTS[index]}
           </span>
         </div>
 
         {/* Right: Currency / Country Selector Trigger */}
-        <div className="flex items-center space-x-3 text-xs">
+        <div className="flex items-center text-xs shrink-0">
           <button
             onClick={onOpenCurrencyModal}
-            className="flex items-center space-x-1.5 hover:text-[#DDA15E] transition-colors py-0.5 px-2 rounded border border-[#606C38]/40 hover:border-[#DDA15E]"
+            className="flex items-center space-x-1 hover:text-[#DDA15E] transition-colors py-0.5 px-1.5 sm:px-2 rounded border border-[#606C38]/40 hover:border-[#DDA15E] text-[10px] sm:text-xs cursor-pointer"
             aria-label="Select Country and Currency"
           >
             <span>{regionData.flag}</span>

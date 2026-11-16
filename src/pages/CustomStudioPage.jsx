@@ -266,51 +266,54 @@ export default function CustomStudioPage() {
         </div>
 
         {/* Step Progress Tracker */}
-        <div className="max-w-2xl mx-auto mb-10">
+        <div className="max-w-2xl mx-auto mb-8 sm:mb-10 px-2 sm:px-0">
           <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-[#283618]/70 relative">
             <button
               onClick={() => setStep(1)}
-              className={`flex items-center gap-1.5 transition-colors ${
+              className={`flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 ${
                 step >= 1 ? 'text-[#606C38] font-bold' : ''
               }`}
             >
               <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center text-[11px]">
                 1
               </span>
-              <span>Silhouette & Base</span>
+              <span className="hidden sm:inline">Silhouette & Base</span>
+              <span className="sm:hidden text-[11px]">Base</span>
             </button>
-            <div className="flex-1 h-0.5 bg-[#DDA15E]/30 mx-4" />
+            <div className="flex-1 h-0.5 bg-[#DDA15E]/30 mx-2 sm:mx-4" />
             <button
               onClick={() => setStep(2)}
-              className={`flex items-center gap-1.5 transition-colors ${
+              className={`flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 ${
                 step >= 2 ? 'text-[#606C38] font-bold' : ''
               }`}
             >
               <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center text-[11px]">
                 2
               </span>
-              <span>Needlework & Palette</span>
+              <span className="hidden sm:inline">Needlework & Palette</span>
+              <span className="sm:hidden text-[11px]">Craft</span>
             </button>
-            <div className="flex-1 h-0.5 bg-[#DDA15E]/30 mx-4" />
+            <div className="flex-1 h-0.5 bg-[#DDA15E]/30 mx-2 sm:mx-4" />
             <button
               onClick={() => setStep(3)}
-              className={`flex items-center gap-1.5 transition-colors ${
+              className={`flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 ${
                 step >= 3 ? 'text-[#606C38] font-bold' : ''
               }`}
             >
               <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center text-[11px]">
                 3
               </span>
-              <span>Monogram & Review</span>
+              <span className="hidden sm:inline">Monogram & Review</span>
+              <span className="sm:hidden text-[11px]">Review</span>
             </button>
           </div>
         </div>
 
         {/* Main 2-Column Configurator Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* Left Column (Sticky Preview & Summary) */}
           <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-6">
-            <div className="bg-[#283618] text-[#FEFAE0] border border-[#DDA15E]/50 p-6 shadow-xl relative overflow-hidden">
+            <div className="bg-[#283618] text-[#FEFAE0] border border-[#DDA15E]/50 p-4 sm:p-6 shadow-xl relative overflow-hidden">
               <div className="aspect-square relative bg-black/20 border border-[#DDA15E]/30 overflow-hidden mb-5">
                 <img
                   src={
@@ -390,7 +393,7 @@ export default function CustomStudioPage() {
           </div>
 
           {/* Right Column (Interactive Selectors per Step) */}
-          <div className="lg:col-span-7 bg-white/70 border border-[#DDA15E]/30 p-6 sm:p-8 shadow-sm">
+          <div className="lg:col-span-7 bg-white/70 border border-[#DDA15E]/30 p-4 sm:p-6 lg:p-8 shadow-sm">
             {/* STEP 1: SILHOUETTE & BASE MATERIAL */}
             {step === 1 && (
               <div className="space-y-8 animate-fade-in">

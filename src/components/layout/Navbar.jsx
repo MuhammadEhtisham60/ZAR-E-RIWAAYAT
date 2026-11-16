@@ -28,7 +28,7 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 30);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -36,6 +36,18 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
+
+  // Prevent background scrolling when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -53,18 +65,18 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
     <header
       className={`sticky top-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#FEFAE0]/95 backdrop-blur-md shadow-md py-2.5 border-b border-[#DDA15E]/30'
-          : 'bg-[#FEFAE0] py-4 border-b border-[#DDA15E]/20'
+          ? 'bg-[#FEFAE0]/95 backdrop-blur-md shadow-md py-2 sm:py-2.5 border-b border-[#DDA15E]/30'
+          : 'bg-[#FEFAE0] py-3 sm:py-4 border-b border-[#DDA15E]/20'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Top Header Row: Mobile Menu Toggle, Brand Logo, Utilities */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           {/* Mobile hamburger button */}
           <div className="flex items-center lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-[#283618] p-1.5 focus:outline-none"
+              className="text-[#283618] p-2 -ml-1 rounded-md hover:bg-[#606C38]/10 transition-colors focus:outline-none"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -87,23 +99,23 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
           </div>
 
           {/* Center Brand Identity */}
-          <div className="text-center flex-1 lg:flex-none">
+          <div className="text-center flex-1 lg:flex-none px-1">
             <Link to="/" className="inline-block group">
-              <h1 className="font-heading text-2xl sm:text-3xl md:text-4xl font-normal tracking-[0.22em] uppercase text-[#283618] group-hover:text-[#606C38] transition-colors">
+              <h1 className="font-heading text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal tracking-[0.16em] sm:tracking-[0.22em] uppercase text-[#283618] group-hover:text-[#606C38] transition-colors whitespace-nowrap">
                 ZAR-E-RIWAAYAT
               </h1>
-              <p className="text-[10px] sm:text-[11px] font-sans font-light tracking-[0.35em] uppercase text-[#BC6C25] -mt-1 group-hover:text-[#DDA15E] transition-colors">
+              <p className="text-[9px] sm:text-[10px] md:text-[11px] font-sans font-light tracking-[0.24em] sm:tracking-[0.35em] uppercase text-[#BC6C25] -mt-0.5 sm:-mt-1 group-hover:text-[#DDA15E] transition-colors">
                 Crafted for Your Royal Moments.
               </p>
             </Link>
           </div>
 
           {/* Right Action Icons: Search, Wishlist, Account, Cart */}
-          <div className="flex items-center space-x-3 sm:space-x-5 text-[#283618]">
+          <div className="flex items-center space-x-2 sm:space-x-4 lg:space-x-5 text-[#283618]">
             {/* Search Trigger */}
             <button
               onClick={onOpenSearch}
-              className="p-1.5 hover:text-[#606C38] transition-colors"
+              className="p-1.5 sm:p-2 hover:text-[#606C38] transition-colors"
               title="Search Collection"
               aria-label="Search Collection"
             >
@@ -113,7 +125,7 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
             {/* Customer Account */}
             <Link
               to="/account"
-              className="p-1.5 hover:text-[#606C38] transition-colors hidden sm:block"
+              className="p-1.5 sm:p-2 hover:text-[#606C38] transition-colors hidden sm:block"
               title="Royal Customer Account"
               aria-label="Customer Account"
             >
@@ -123,13 +135,13 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
             {/* Wishlist */}
             <Link
               to="/account"
-              className="p-1.5 hover:text-[#606C38] transition-colors relative"
+              className="p-1.5 sm:p-2 hover:text-[#606C38] transition-colors relative"
               title="Royal Wishlist"
               aria-label="Wishlist"
             >
               <Heart className="w-5 h-5" />
               {wishlistItems.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#BC6C25] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                <span className="absolute 0 top-0.5 right-0.5 bg-[#BC6C25] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                   {wishlistItems.length}
                 </span>
               )}
@@ -138,7 +150,7 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
             {/* Cart Button */}
             <button
               onClick={onOpenCart}
-              className="p-1.5 hover:text-[#606C38] transition-colors relative flex items-center gap-1.5"
+              className="p-1.5 sm:p-2 hover:text-[#606C38] transition-colors relative flex items-center gap-1.5"
               title="View Shopping Bag"
               aria-label="View Shopping Bag"
             >
@@ -154,7 +166,7 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
           </div>
         </div>
 
-        {/* Desktop Primary Navigation Bar */}
+        {/* Desktop Primary Navigation Bar (Preserved pristine for laptops) */}
         <nav className="hidden lg:block mt-3 border-t border-[#DDA15E]/20 pt-2">
           <ul className="flex items-center justify-center space-x-7 xl:space-x-8 text-xs font-medium uppercase tracking-[0.16em]">
             {navLinks.map((link) => {
@@ -180,14 +192,20 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
         </nav>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile & Tablet Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm">
-          <div className="bg-[#FEFAE0] w-4/5 max-w-sm h-full shadow-2xl p-6 flex flex-col justify-between overflow-y-auto">
+        <div
+          className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <div
+            className="bg-[#FEFAE0] w-[85%] sm:w-80 max-w-sm h-full shadow-2xl p-5 sm:p-6 flex flex-col justify-between overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div>
-              <div className="flex items-center justify-between pb-4 border-b border-[#DDA15E]/30 mb-6">
+              <div className="flex items-center justify-between pb-4 border-b border-[#DDA15E]/30 mb-5">
                 <div>
-                  <span className="font-heading text-xl font-bold tracking-widest text-[#283618]">
+                  <span className="font-heading text-xl font-bold tracking-widest text-[#283618] block">
                     ZAR-E-RIWAAYAT
                   </span>
                   <p className="text-[9px] uppercase tracking-wider text-[#BC6C25]">
@@ -196,7 +214,7 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
                 </div>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-1 text-[#283618]"
+                  className="p-1.5 text-[#283618] hover:bg-[#606C38]/10 rounded"
                   aria-label="Close menu"
                 >
                   <X className="w-6 h-6" />
@@ -204,32 +222,37 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
               </div>
 
               {/* Navigation items */}
-              <ul className="space-y-4 text-sm font-medium tracking-wider uppercase">
-                {navLinks.map((link) => (
-                  <li key={link.path}>
-                    <Link
-                      to={link.path}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`block py-1.5 transition-colors ${
-                        link.highlight
-                          ? 'text-[#BC6C25] font-bold flex items-center justify-between'
-                          : 'text-[#283618] hover:text-[#606C38]'
-                      }`}
-                    >
-                      <span>{link.name}</span>
-                      {link.highlight && (
-                        <span className="text-[10px] bg-[#606C38] text-white px-2 py-0.5 rounded uppercase">
-                          Bespoke
-                        </span>
-                      )}
-                    </Link>
-                  </li>
-                ))}
+              <ul className="space-y-3 sm:space-y-3.5 text-sm font-medium tracking-wider uppercase">
+                {navLinks.map((link) => {
+                  const isActive = location.pathname === link.path;
+                  return (
+                    <li key={link.path}>
+                      <Link
+                        to={link.path}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`block py-2 px-2.5 rounded transition-colors ${
+                          isActive
+                            ? 'bg-[#606C38]/15 text-[#606C38] font-bold'
+                            : link.highlight
+                            ? 'text-[#BC6C25] font-bold flex items-center justify-between'
+                            : 'text-[#283618] hover:bg-[#606C38]/10'
+                        }`}
+                      >
+                        <span>{link.name}</span>
+                        {link.highlight && (
+                          <span className="text-[10px] bg-[#606C38] text-white px-2 py-0.5 rounded uppercase">
+                            Bespoke
+                          </span>
+                        )}
+                      </Link>
+                    </li>
+                  );
+                })}
                 <li className="pt-2 border-t border-[#DDA15E]/20">
                   <Link
                     to="/account"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block py-1.5 text-[#283618] hover:text-[#606C38]"
+                    className="block py-2 px-2.5 rounded text-[#283618] hover:bg-[#606C38]/10"
                   >
                     My Royal Account
                   </Link>
@@ -238,7 +261,7 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
                   <Link
                     to="/order-tracking"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block py-1.5 text-[#283618] hover:text-[#606C38]"
+                    className="block py-2 px-2.5 rounded text-[#283618] hover:bg-[#606C38]/10"
                   >
                     Track Order
                   </Link>
@@ -247,13 +270,13 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
             </div>
 
             {/* Mobile Footer with Currency Switcher */}
-            <div className="pt-6 border-t border-[#DDA15E]/30">
+            <div className="pt-5 border-t border-[#DDA15E]/30 space-y-3">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenCurrencyModal();
                 }}
-                className="w-full flex items-center justify-between py-2 px-3 border border-[#606C38]/40 bg-[#606C38]/10 text-xs text-[#283618] rounded"
+                className="w-full flex items-center justify-between py-2.5 px-3 border border-[#606C38]/40 bg-[#606C38]/10 text-xs text-[#283618] rounded"
               >
                 <div className="flex items-center space-x-2">
                   <span>{regionData.flag}</span>
@@ -262,6 +285,9 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
                 </div>
                 <ChevronDown className="w-4 h-4 text-[#606C38]" />
               </button>
+              <div className="text-[10px] text-center text-[#283618]/60 uppercase tracking-widest">
+                DHL Express Worldwide Delivery
+              </div>
             </div>
           </div>
         </div>

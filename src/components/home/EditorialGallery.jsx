@@ -65,11 +65,11 @@ export default function EditorialGallery() {
                 loading="lazy"
                 className="w-full h-full object-cover transform transition-transform duration-700 ease-out group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#283618]/90 via-[#283618]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3 text-[#FEFAE0]">
-                <span className="text-[9px] uppercase tracking-widest text-[#DDA15E] font-semibold">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#283618]/90 via-[#283618]/20 to-transparent opacity-85 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2.5 sm:p-3 text-[#FEFAE0]">
+                <span className="text-[8px] sm:text-[9px] uppercase tracking-widest text-[#DDA15E] font-semibold">
                   {item.category}
                 </span>
-                <span className="font-heading text-xs font-medium leading-tight">
+                <span className="font-heading text-[11px] sm:text-xs font-medium leading-tight truncate">
                   {item.title}
                 </span>
               </div>

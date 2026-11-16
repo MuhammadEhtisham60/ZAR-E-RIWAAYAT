@@ -334,11 +334,11 @@ export default function ProductDetailPage() {
         </div>
 
         {/* Detailed Tabs: Description, Craftsmanship, Reviews */}
-        <div className="mt-16 pt-10 border-t border-[#DDA15E]/30">
-          <div className="flex border-b border-[#DDA15E]/30 space-x-8 mb-8 text-xs uppercase tracking-widest font-semibold">
+        <div className="mt-12 sm:mt-16 pt-8 sm:pt-10 border-t border-[#DDA15E]/30">
+          <div className="flex border-b border-[#DDA15E]/30 space-x-4 sm:space-x-8 mb-6 sm:mb-8 text-xs uppercase tracking-widest font-semibold overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
             <button
               onClick={() => setActiveTab('details')}
-              className={`pb-3 transition-colors ${
+              className={`pb-3 transition-colors whitespace-nowrap shrink-0 ${
                 activeTab === 'details'
                   ? 'border-b-2 border-[#606C38] text-[#606C38]'
                   : 'text-[#283618]/60 hover:text-[#283618]'
@@ -348,7 +348,7 @@ export default function ProductDetailPage() {
             </button>
             <button
               onClick={() => setActiveTab('craft')}
-              className={`pb-3 transition-colors ${
+              className={`pb-3 transition-colors whitespace-nowrap shrink-0 ${
                 activeTab === 'craft'
                   ? 'border-b-2 border-[#606C38] text-[#606C38]'
                   : 'text-[#283618]/60 hover:text-[#283618]'
@@ -358,7 +358,7 @@ export default function ProductDetailPage() {
             </button>
             <button
               onClick={() => setActiveTab('reviews')}
-              className={`pb-3 transition-colors ${
+              className={`pb-3 transition-colors whitespace-nowrap shrink-0 ${
                 activeTab === 'reviews'
                   ? 'border-b-2 border-[#606C38] text-[#606C38]'
                   : 'text-[#283618]/60 hover:text-[#283618]'

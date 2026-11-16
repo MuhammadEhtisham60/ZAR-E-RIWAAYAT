@@ -46,21 +46,21 @@ export default function QuickViewModal({ product, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
       <div
-        className="bg-[#FEFAE0] border border-[#DDA15E]/50 max-w-3xl w-full p-6 md:p-8 text-[#283618] relative shadow-2xl max-h-[90vh] overflow-y-auto"
+        className="bg-[#FEFAE0] border border-[#DDA15E]/50 max-w-3xl w-full p-4 sm:p-6 md:p-8 text-[#283618] relative shadow-2xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 text-[#283618]/60 hover:text-[#283618] transition-colors"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 p-1.5 text-[#283618]/60 hover:text-[#283618] transition-colors cursor-pointer"
           aria-label="Close modal"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
           {/* Left: Product Image */}
           <div className="relative aspect-square overflow-hidden bg-[#283618]/5 border border-[#DDA15E]/30">
             <img
