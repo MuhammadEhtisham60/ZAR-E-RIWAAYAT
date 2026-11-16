@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setRegion, REGIONS } from '../../store/currencySlice';
 import { X, Check, Globe, Plane, ShieldCheck } from 'lucide-react';
