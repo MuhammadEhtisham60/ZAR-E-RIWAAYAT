@@ -131,7 +131,7 @@ export default function HeroSection() {
       onTouchEnd={handleTouchEnd}
       aria-label="Hero Showcase Slider"
     >
-      <div className="relative w-full min-h-[80vh] sm:min-h-[85vh] lg:min-h-[92vh] flex items-center">
+      <div className="relative w-full min-h-[75vh] sm:min-h-[85vh] lg:min-h-[92vh] flex items-center">
         {/* Layered Background Slides with Smooth 1200ms Crossfade & Continuous Gentle Ken Burns Zoom */}
         {slides.map((slide, index) => {
           const isActive = index === currentIndex;
@@ -162,13 +162,13 @@ export default function HeroSection() {
         })}
 
         {/* Content Container with Smooth Animation on Slide Change */}
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28 z-10 w-full">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 sm:py-20 lg:py-28 z-10 w-full">
           <div
             key={currentSlide.id}
-            className="max-w-2xl transition-all duration-700 ease-out transform translate-y-0 opacity-100 animate-fadeIn"
+            className="max-w-2xl pr-12 sm:pr-0 transition-all duration-700 ease-out transform translate-y-0 opacity-100 animate-fadeIn"
           >
             {/* Royal Tagline Pill */}
-            <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 bg-[#606C38]/50 backdrop-blur-md border border-[#DDA15E]/50 rounded-full text-[#FEFAE0] text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.25em] font-medium mb-4 sm:mb-6 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 bg-[#606C38]/50 backdrop-blur-md border border-[#DDA15E]/50 rounded-full text-[#FEFAE0] text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.25em] font-medium mb-3 sm:mb-6 shadow-sm">
               <BadgeIcon className="w-3.5 h-3.5 text-[#DDA15E] animate-pulse shrink-0" />
               <span className="truncate">{currentSlide.badgeText}</span>
             </div>
@@ -182,13 +182,13 @@ export default function HeroSection() {
               {currentSlide.titleLine2}
             </h1>
 
-            {/* Supporting Text */}
-            <p className="text-sm sm:text-base lg:text-lg text-[#FEFAE0]/90 font-light leading-relaxed mb-6 sm:mb-8 max-w-xl drop-shadow-sm">
+            {/* Supporting Text (Hidden on mobile per request, visible on tablet and laptop) */}
+            <p className="hidden sm:block text-sm sm:text-base lg:text-lg text-[#FEFAE0]/90 font-light leading-relaxed mb-6 sm:mb-8 max-w-xl drop-shadow-sm">
               {currentSlide.description}
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 max-w-md sm:max-w-none">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 max-w-md sm:max-w-none mt-2 sm:mt-0">
               <Link
                 to={currentSlide.primaryBtn.link}
                 className="bg-[#606C38] hover:bg-[#DDA15E] hover:text-[#283618] text-[#FEFAE0] text-xs uppercase tracking-[0.2em] font-bold py-3.5 sm:py-4 px-6 sm:px-8 transition-all duration-300 flex items-center justify-center gap-3 shadow-lg group border border-[#606C38] hover:border-[#DDA15E]"
