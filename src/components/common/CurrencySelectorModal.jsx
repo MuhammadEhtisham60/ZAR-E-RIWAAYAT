@@ -7,6 +7,24 @@ export default function CurrencySelectorModal({ isOpen, onClose }) {
   const dispatch = useDispatch();
   const { currentRegion } = useSelector((state) => state.currency);
 
+  // Lock background scroll and pause Lenis when currency modal is open
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      window.lenis?.stop();
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.lenis?.start();
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.lenis?.start();
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleSelect = (code) => {
@@ -15,10 +33,18 @@ export default function CurrencySelectorModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
+      data-lenis-prevent="true"
+      onTouchMove={(e) => {
+        if (e.target === e.currentTarget) e.preventDefault();
+      }}
+    >
       <div
-        className="bg-[#FEFAE0] border border-[#DDA15E]/50 rounded-none shadow-2xl max-w-lg w-full p-6 text-[#283618] relative"
+        className="bg-[#FEFAE0] border border-[#DDA15E]/50 rounded-none shadow-2xl max-w-lg w-full p-6 text-[#283618] relative overscroll-contain"
         onClick={(e) => e.stopPropagation()}
+        data-lenis-prevent="true"
+        style={{ overscrollBehavior: 'contain' }}
       >
         {/* Close Button */}
         <button

@@ -30,6 +30,24 @@ export default function CartDrawer({ isOpen, onClose }) {
 
   const [promoInput, setPromoInput] = useState('');
 
+  // Lock background scroll and stop Lenis when cart drawer is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      window.lenis?.stop();
+    } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.lenis?.start();
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.lenis?.start();
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const subtotalPKR = cart.items.reduce(
@@ -65,10 +83,18 @@ export default function CartDrawer({ isOpen, onClose }) {
   const progressPercent = Math.min(100, Math.round((taxablePKR / thresholdPKR) * 100));
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-end animate-fade-in">
+    <div
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-end animate-fade-in"
+      data-lenis-prevent="true"
+      onTouchMove={(e) => {
+        if (e.target === e.currentTarget) e.preventDefault();
+      }}
+    >
       <div
-        className="bg-[#FEFAE0] w-full max-w-md h-full shadow-2xl flex flex-col justify-between border-l border-[#DDA15E]/40"
+        className="bg-[#FEFAE0] w-full max-w-md h-full shadow-2xl flex flex-col justify-between border-l border-[#DDA15E]/40 overscroll-contain touch-pan-y"
         onClick={(e) => e.stopPropagation()}
+        data-lenis-prevent="true"
+        style={{ overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}
       >
         {/* Drawer Header */}
         <div className="p-4 sm:p-5 border-b border-[#DDA15E]/30 flex items-center justify-between">

@@ -24,6 +24,18 @@ export default function QuickViewModal({ product, onClose }) {
 
   const isWishlisted = wishlistItems.some((item) => item.id === product.id);
 
+  // Lock background scroll and pause Lenis when QuickView modal is open
+  React.useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    window.lenis?.stop();
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.lenis?.start();
+    };
+  }, []);
+
   const handleAdd = () => {
     dispatch(
       addToCart({
@@ -46,10 +58,18 @@ export default function QuickViewModal({ product, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-sm animate-fade-in">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-sm animate-fade-in"
+      data-lenis-prevent="true"
+      onTouchMove={(e) => {
+        if (e.target === e.currentTarget) e.preventDefault();
+      }}
+    >
       <div
-        className="bg-[#FEFAE0] border border-[#DDA15E]/50 max-w-3xl w-full p-4 sm:p-6 md:p-8 text-[#283618] relative shadow-2xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto"
+        className="bg-[#FEFAE0] border border-[#DDA15E]/50 max-w-3xl w-full p-4 sm:p-6 md:p-8 text-[#283618] relative shadow-2xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto overscroll-contain"
         onClick={(e) => e.stopPropagation()}
+        data-lenis-prevent="true"
+        style={{ overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}
       >
         {/* Close Button */}
         <button

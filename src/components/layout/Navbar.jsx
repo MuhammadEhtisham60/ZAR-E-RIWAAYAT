@@ -38,15 +38,21 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
-  // Prevent background scrolling when mobile menu is open
+  // Prevent background scrolling and stop Lenis smooth scroller when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      window.lenis?.stop();
     } else {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.lenis?.start();
     }
     return () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.lenis?.start();
     };
   }, [mobileMenuOpen]);
 
@@ -200,10 +206,22 @@ export default function Navbar({ onOpenSearch, onOpenCart, onOpenCurrencyModal }
           <div
             className="lg:hidden fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex justify-start animate-fade-in"
             onClick={() => setMobileMenuOpen(false)}
+            data-lenis-prevent="true"
+            onTouchMove={(e) => {
+              if (e.target === e.currentTarget) {
+                e.preventDefault();
+              }
+            }}
           >
             <div
-              className="bg-[#FEFAE0] w-[85%] sm:w-80 max-w-sm h-screen h-[100dvh] shadow-2xl p-5 sm:p-6 flex flex-col justify-between overflow-y-auto animate-slide-right"
+              className="bg-[#FEFAE0] w-[85%] sm:w-80 max-w-sm h-screen h-[100dvh] shadow-2xl p-5 sm:p-6 flex flex-col justify-between overflow-y-auto overscroll-contain touch-pan-y animate-slide-right select-text"
               onClick={(e) => e.stopPropagation()}
+              data-lenis-prevent="true"
+              style={{
+                WebkitOverflowScrolling: 'touch',
+                overscrollBehavior: 'contain',
+                touchAction: 'pan-y',
+              }}
             >
               <div>
                 <div className="flex items-center justify-between pb-4 border-b border-[#DDA15E]/30 mb-5">

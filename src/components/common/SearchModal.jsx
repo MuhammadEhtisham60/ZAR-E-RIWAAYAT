@@ -12,10 +12,21 @@ export default function SearchModal({ isOpen, onClose }) {
 
   useEffect(() => {
     if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      window.lenis?.stop();
       setTimeout(() => inputRef.current?.focus(), 50);
     } else {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.lenis?.start();
       setQuery('');
     }
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.lenis?.start();
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -33,10 +44,18 @@ export default function SearchModal({ isOpen, onClose }) {
     : [];
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex flex-col p-2 sm:p-6 md:p-12 animate-fade-in">
+    <div
+      className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex flex-col p-2 sm:p-6 md:p-12 animate-fade-in"
+      data-lenis-prevent="true"
+      onTouchMove={(e) => {
+        if (e.target === e.currentTarget) e.preventDefault();
+      }}
+    >
       <div
-        className="max-w-4xl w-full mx-auto bg-[#FEFAE0] border border-[#DDA15E]/50 shadow-2xl flex flex-col max-h-[92vh] sm:max-h-[85vh] overflow-hidden my-auto"
+        className="max-w-4xl w-full mx-auto bg-[#FEFAE0] border border-[#DDA15E]/50 shadow-2xl flex flex-col max-h-[92vh] sm:max-h-[85vh] overflow-hidden my-auto overscroll-contain"
         onClick={(e) => e.stopPropagation()}
+        data-lenis-prevent="true"
+        style={{ overscrollBehavior: 'contain' }}
       >
         {/* Search Input Box */}
         <div className="p-3 sm:p-6 border-b border-[#DDA15E]/30 flex items-center gap-2 sm:gap-3">
